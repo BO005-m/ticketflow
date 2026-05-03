@@ -29,7 +29,7 @@ export default function Nav() {
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center space-x-2 transition-opacity hover:opacity-90">
             <span className="font-syne text-xl font-extrabold tracking-tight">
-              Ticket<span className="text-accent">Flow</span>
+              Ticket<span className="text-accent">Flowchoaib</span>
             </span>
           </Link>
 
