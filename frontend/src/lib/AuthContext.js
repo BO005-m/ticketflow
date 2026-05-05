@@ -15,7 +15,12 @@ export function AuthProvider({ children }) {
     if (token) {
       api.me()
         .then(({ user }) => setUser(user))
-        .catch(() => localStorage.removeItem('tf_token'))
+        .catch((err) => {
+          // Ne supprimer le token que si c'est une erreur d'authentification (401)
+          if (err.message.includes('401') || err.message.includes('token') || err.message.includes('expired')) {
+            localStorage.removeItem('tf_token');
+          }
+        })
         .finally(() => setLoading(false));
     } else {
       setLoading(false);

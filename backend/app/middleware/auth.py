@@ -15,7 +15,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(bearer)
     cursor = conn.cursor(dictionary=True)
     try:
         cursor.execute(
-            "SELECT id, email, name, role FROM users WHERE id = %s", (payload["id"],)
+            "SELECT id, email, name, role, created_at FROM users WHERE id = %s", (payload["id"],)
         )
         user = cursor.fetchone()
         if not user:

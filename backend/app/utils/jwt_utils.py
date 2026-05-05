@@ -5,7 +5,7 @@ import os
 
 load_dotenv()
 
-SECRET    = os.getenv("JWT_SECRET")
+SECRET    = os.getenv("JWT_SECRET", "dev_secret_key_change_me_in_production")
 ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
 EXPIRE    = int(os.getenv("JWT_EXPIRE_DAYS", 7))
 

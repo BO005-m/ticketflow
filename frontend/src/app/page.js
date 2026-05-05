@@ -8,11 +8,11 @@ export default function Home() {
   const { user } = useAuth();
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative h-[calc(100vh-64px)] flex flex-col overflow-hidden">
       {/* Background Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-accent/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <section className="relative pt-20 pb-16 md:pt-32 md:pb-24">
+      <section className="relative flex-1 flex items-center justify-center py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -45,24 +45,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-20 bg-surface/50 border-y border-border">
+      {/* Features - Made more compact */}
+      <section className="py-12 bg-surface/30 border-t border-border backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <FeatureCard
-              icon={<ShieldCheck className="h-8 w-8 text-accent2" />}
+              icon={<ShieldCheck className="h-6 w-6 text-accent2" />}
               title="Anti-Fraude"
-              description="QR codes dynamiques qui changent toutes les 30 secondes pour empêcher les captures d'écran et la fraude."
+              description="QR codes dynamiques qui changent toutes les 30 secondes."
             />
             <FeatureCard
-              icon={<Repeat className="h-8 w-8 text-accent" />}
+              icon={<Repeat className="h-6 w-6 text-accent" />}
               title="Revente Équitable"
-              description="Système de revente intégré plafonné au prix d'achat original pour stopper le marché noir."
+              description="Système plafonné au prix d'achat original."
             />
             <FeatureCard
-              icon={<Zap className="h-8 w-8 text-blue-400" />}
+              icon={<Zap className="h-6 w-6 text-blue-400" />}
               title="Accès Rapide"
-              description="Validation instantanée aux entrées grâce à notre technologie de scan optimisée."
+              description="Validation instantanée aux entrées."
             />
           </div>
         </div>
@@ -73,10 +73,12 @@ export default function Home() {
 
 function FeatureCard({ icon, title, description }) {
   return (
-    <div className="p-8 rounded-3xl border border-border bg-background transition-colors hover:border-accent/50">
-      <div className="mb-4">{icon}</div>
-      <h3 className="text-xl font-bold mb-2 font-syne">{title}</h3>
-      <p className="text-muted leading-relaxed">{description}</p>
+    <div className="p-5 rounded-2xl border border-border bg-background/50 transition-colors hover:border-accent/50 flex items-start gap-4">
+      <div className="shrink-0 p-2 rounded-xl bg-surface border border-border">{icon}</div>
+      <div>
+        <h3 className="text-sm font-bold font-syne mb-1">{title}</h3>
+        <p className="text-xs text-muted leading-relaxed">{description}</p>
+      </div>
     </div>
   );
 }

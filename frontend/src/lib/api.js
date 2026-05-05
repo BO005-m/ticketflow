@@ -7,17 +7,34 @@ function getToken() {
 
 async function request(path, options = {}) {
   const token = getToken();
-  const res = await fetch(`${BASE}${path}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers,
-    },
-    ...options,
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.detail || data.error || 'Request failed');
-  return data;
+  try {
+    const res = await fetch(`${BASE}${path}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...options.headers,
+      },
+      ...options,
+    });
+
+    const contentType = res.headers.get('content-type');
+    let data;
+    if (contentType && contentType.includes('application/json')) {
+      data = await res.json();
+    } else {
+      data = { detail: await res.text() };
+    }
+
+    if (!res.ok) {
+      throw new Error(data.detail || data.error || `Erreur serveur (${res.status})`);
+    }
+    return data;
+  } catch (error) {
+    if (error.name === 'TypeError') {
+      throw new Error('Impossible de contacter le serveur. Vérifiez votre connexion.');
+    }
+    throw error;
+  }
 }
 
 export const api = {

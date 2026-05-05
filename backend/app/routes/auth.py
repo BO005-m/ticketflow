@@ -43,12 +43,12 @@ def register(body: RegisterBody):
             "INSERT INTO users (id, email, password, name, role) VALUES (%s, %s, %s, %s, %s)",
             (user_id, body.email.lower(), hashed, body.name.strip(), role)
         )
-        conn.commit()
         cursor.execute(
             "SELECT id, email, name, role, created_at FROM users WHERE id = %s", (user_id,)
         )
         user = cursor.fetchone()
         token = sign_token({"id": user["id"], "role": user["role"]})
+        conn.commit()
         return {"token": token, "user": user}
     except Exception as e:
         conn.rollback()
